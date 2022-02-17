@@ -1,0 +1,86 @@
+﻿@model IEnumerable<MOJECIEAPP.Models.KYCRecords>
+
+@{
+    ViewBag.Title = "KYCRecords";
+}
+
+
+<p>
+    @Html.ActionLink("Upload KYC", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateShared)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Batch)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACNo1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ACNo2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SBCsMAIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SBCs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OPERATOR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ARN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdditionalComment)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateShared)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Batch)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACNo1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ACNo2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SBCsMAIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SBCs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OPERATOR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ARN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdditionalComment)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
