@@ -17,7 +17,9 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="~/assets/images/favicon.png" />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
     <script src="../assets/js/preloader.js"></script>
@@ -77,12 +79,12 @@
                             <div class="mdc-expansion-panel" id="sample-page-submenu">
                                 <nav class="mdc-list mdc-drawer-submenu">
                                     <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="mdc-drawer-link" href='@Url.Action("PaymentRecord", "MOJECIE")'>
+                                        <a class="mdc-drawer-link" href='@Url.Action("UploadPayment", "MOJECIE")'>
                                             Payment Upload
                                         </a>
                                     </div>
                                     <div class="mdc-list-item mdc-drawer-item">
-                                        <a class="mdc-drawer-link" href='@Url.Action("Index", "MOJECIE")'>
+                                        <a class="mdc-drawer-link" href='@Url.Action("PaymentRecord", "MOJECIE")'>
                                             Payment Report
                                         </a>
                                     </div>
@@ -115,15 +117,7 @@
                                 <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
                                     <li class="mdc-list-item" role="menuitem">
                                         <div class="item-thumbnail item-thumbnail-icon-only">
-                                            <i class="mdi mdi-account-edit-outline text-primary"></i>
-                                        </div>
-                                        <div class="item-content d-flex align-items-start flex-column justify-content-center">
-                                            <h6 class="item-subject font-weight-normal">Edit profile</h6>
-                                        </div>
-                                    </li>
-                                    <li class="mdc-list-item" role="menuitem">
-                                        <div class="item-thumbnail item-thumbnail-icon-only">
-                                            <i class="mdi mdi-settings-outline text-primary"></i>
+                                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         </div>
                                         <div class="item-content d-flex align-items-start flex-column justify-content-center">
                                             <h6 class="item-subject font-weight-normal">Logout</h6>
@@ -131,7 +125,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>                     
+                        </div>
                     </div>
                 </div>
             </header>
@@ -151,6 +145,7 @@
     <!-- inject:js -->
     <script src="~/assets/js/material.js"></script>
     <script src="~/assets/js/misc.js"></script>
+
     <!-- endinject -->
     <!-- Custom js for this page-->
     <!-- End custom js for this page-->

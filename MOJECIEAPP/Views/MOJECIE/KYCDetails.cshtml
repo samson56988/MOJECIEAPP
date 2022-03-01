@@ -1,0 +1,366 @@
+﻿@model MOJECIEAPP.Models.KYCRecords
+
+@{
+    ViewBag.Title = "KYCDetails";
+}
+
+<div class="page-wrapper mdc-toolbar-fixed-adjust">
+    <style>
+        .control-label {
+            color:mediumpurple;
+        }
+    </style>
+    <main class="content-wrapper">
+        <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+                <div class="mdc-layout-grid__cell--span-12">
+                    <div class="mdc-card">
+                        <h6 class="card-title">Upload KYC File</h6>
+                        <div class="template-demo">
+                            <div class="mdc-layout-grid__inner">
+
+                                @using (Html.BeginForm())
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-horizontal">
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DateShared, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.DateShared, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.DateShared, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Batch, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Batch, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Batch, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ACNo1, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ACNo1, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ACNo1, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ACNo2, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ACNo2, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ACNo2, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SBCsMAIN, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.SBCsMAIN, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.SBCsMAIN, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SBCs, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.SBCs, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.SBCs, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OPERATOR, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.OPERATOR, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.OPERATOR, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ARN, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ARN, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ARN, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Customer, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CIS, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.CIS, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.CIS, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.CISAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.CISAddress, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.CISAddress, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Landmark, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Landmark, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Landmark, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.BU, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.BU, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.BU, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.UT, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.UT, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.UT, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Feeder, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Feeder, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Feeder, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.DT, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.DT, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.DT, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Tariff, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Tariff, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Tariff, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MeteredStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.MeteredStatus, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.MeteredStatus, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ReadyToPay, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ReadyToPay, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ReadyToPay, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.OccupierPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.OccupierPhone, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.OccupierPhone, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.TypeofApartment, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.TypeofApartment, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.TypeofApartment, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ExistingMeterType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ExistingMeterType, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ExistingMeterType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.ExistingMeterNo, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.ExistingMeterNo, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.ExistingMeterNo, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.Customerbillmatchdataincolumn310, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.Customerbillmatchdataincolumn310, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.Customerbillmatchdataincolumn310, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.EstCustomerTotalLoadAmps, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.EstCustomerTotalLoadAmps, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.EstCustomerTotalLoadAmps, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RecommendedMeterType, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.RecommendedMeterType, new { htmlAttributes = new { @class = "form-control" , disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.RecommendedMeterType, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.InstallationModePolemounted, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.InstallationModePolemounted, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.InstallationModePolemounted, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.LOADwireseparation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.LOADwireseparation, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.LOADwireseparation, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AccountSeparation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.AccountSeparation, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.AccountSeparation, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.numberof1QrequiredforAccountSeparation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.numberof1QrequiredforAccountSeparation, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.numberof1QrequiredforAccountSeparation, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.numberof3QrequiredforAccountSeparation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.numberof3QrequiredforAccountSeparation, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.numberof3QrequiredforAccountSeparation, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.InstallationSurveyCompany, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.InstallationSurveyCompany, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.InstallationSurveyCompany, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.InstallerSurveystaff, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.InstallerSurveystaff, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.InstallerSurveystaff, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.SurveyDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.SurveyDate, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.SurveyDate, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.RemarkMeterReadyNotMeterReady, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.RemarkMeterReadyNotMeterReady, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.RemarkMeterReadyNotMeterReady, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.MAP, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.MAP, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.MAP, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.AdditionalComment, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.DisplayFor(model => model.AdditionalComment, new { htmlAttributes = new { @class = "form-control", disabled = "true" } })
+                                                @Html.ValidationMessageFor(model => model.AdditionalComment, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <a href="@Url.Action("KYCRecords", "MOJECIE")" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
+                                                    Back To List
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
