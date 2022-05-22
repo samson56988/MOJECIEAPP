@@ -39,7 +39,7 @@ namespace MOJECIEAPP.Controllers
                 username = dr["Username"].ToString();
                 FormsAuthentication.SetAuthCookie(Username, true);
                 Session["Username"] = Username.ToString();
-                return RedirectToAction("Upload", "MOJECIE");
+                return RedirectToAction("Dashboard", "MOJECIE");
             }
             else
             {
