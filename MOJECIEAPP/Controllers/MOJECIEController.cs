@@ -31,6 +31,12 @@ namespace MOJECIEAPP.Controllers
 
         public ActionResult Dashboard()
         {
+            string Username = (string)Session["Username"];
+
+            if(string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             con.Open();
             SqlCommand cmd = new SqlCommand("select Count(*) from KYCEXCEL WHERE BU = 'SHOMOLU'", con);
             int r = Convert.ToInt32(cmd.ExecuteScalar());
@@ -47,17 +53,32 @@ namespace MOJECIEAPP.Controllers
         }
         public ActionResult Upload()
         {
+            string Username = (string)Session["Username"];
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             return View();
         }
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
-            System.Threading.Thread.Sleep(5000);
-            string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-            string filepath = "/excelfolder/" + filename;
-            file.SaveAs(Path.Combine(Server.MapPath("/excelfolder/"), filename));
-            InsertExceldate(filepath, filename);
-            return View();
+            try
+            {
+              
+                System.Threading.Thread.Sleep(5000);
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                string filepath = "/excelfolder/" + filename;
+                file.SaveAs(Path.Combine(Server.MapPath("/excelfolder/"), filename));
+                InsertExceldate(filepath, filename);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Upload Failed";
+            }
+           return View();
         }
         private void ExcelConn(string FilePath)
         {
@@ -225,6 +246,12 @@ namespace MOJECIEAPP.Controllers
         }
         public ActionResult KYCRecords(int PageNumber = 1)
         {
+            string Username = (string)Session["Username"];
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             _kycs = new List<KYCRecords>();
             using (SqlConnection con = new SqlConnection(StoreConnection.GetConnection()))
             {
@@ -289,6 +316,12 @@ namespace MOJECIEAPP.Controllers
         }
         public ActionResult PaymentRecord(int PageNumber = 1)
         {
+            string Username = (string)Session["Username"];
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             _paymentRecords = new List<PaymentRecords>();
             using (SqlConnection con = new SqlConnection(StoreConnection.GetConnection()))
             {
@@ -383,127 +416,155 @@ namespace MOJECIEAPP.Controllers
         }
         public ActionResult UploadPayment()
         {
+            string Username = (string)Session["Username"];
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             return View();
         }
         [HttpPost]
         public async Task<ActionResult> UploadPayment(HttpPostedFileBase file)
         {
-            System.Threading.Thread.Sleep(5000);
-            string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-            string filepath = "/excelfolder/" + filename;
-            file.SaveAs(Path.Combine(Server.MapPath("/excelfolder/"), filename));
-            string fullpath = Server.MapPath("/excelfolder/") + filename;
-            ExcelConn(fullpath);
+            string Username = (string)Session["Username"];
 
-            string Acno = "";
-            string CustomerName = "";
-            string Email = "";
-            string Tel = +234 + "";
-            string payref = "";
-            string MAPMeterType = "";
-            string Metertype = "";
-            string Query = string.Format("Select * from [{0}]", "Sheet1$");
-            OleDbCommand Ecom = new OleDbCommand(Query, Econ);
-            Econ.Open();
-            OleDbDataReader dr = Ecom.ExecuteReader();
-            while (dr.Read())
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
             {
-                Acno = dr[3].ToString();
-                CustomerName = dr[5].ToString();
-                Email = dr[6].ToString();
-                Tel = dr[7].ToString();
-                payref = dr[16].ToString();
-                MAPMeterType = dr[13].ToString();
-
-                if (MAPMeterType == "1phase")
-                {
-                    Metertype = "1 Phase";
-                }
-                else if (MAPMeterType == "3phase")
-                {
-                    Metertype = "3 Phase";
-                }
-
-                RestClient restClient = new RestClient("https://api.ng.termii.com/api/sms/otp/send");
-
-                //Creating Json object
-                JObject objectBody = new JObject();
-                objectBody.Add("api_key", "TLEshtuwI3Ie4OEwEC2znYMgZ67bFcV3Nhqpx54QzfjZw2NLExjbRnqBuDMvmn");
-                objectBody.Add("message_type", "NUMERIC");
-                objectBody.Add("to", Tel);
-                objectBody.Add("from", "Mojec");
-                objectBody.Add("channel", "generic");
-                objectBody.Add("pin_attempts", 10);
-                objectBody.Add("pin_time_to_live", 5);
-                objectBody.Add("pin_length", 6);
-                objectBody.Add("pin_placeholder", "< 1234 >");
-                objectBody.Add("message_text", " Dear Sir / Ma, Your meter application on CIS account " + Acno + " is approved.Survey Result - " + Metertype + " click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: " + payref + " Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
-                objectBody.Add("pin_type", "NUMERIC");
-                RestRequest restRequest = new RestRequest(Method.POST);
-
-                restRequest.AddHeader("Content-Type", "application/json");
-                restRequest.AddParameter("application/json", objectBody, ParameterType.RequestBody);
-                IRestResponse restResponse = restClient.Execute(restRequest);
-                string responsemessage = restResponse.Content;
-                MailjetClient client = new MailjetClient("a2aecb3da444f627a5472c374b33cd84", "137c68f561d36cd5e9eb2295260ba108");
-                MailjetRequest request = new MailjetRequest
-                {
-                    Resource = Send.Resource,
-                }
-                .Property(Send.FromEmail, "map@mojec.com")
-                .Property(Send.FromName, "Mojec Map")
-                .Property(Send.To, Email)
-                .Property(Send.Subject, "Ikeja Map")
-                .Property(Send.TextPart, "Dear Sir / Ma,Your meter application on CIS account " + Acno + " is approved.Survey Result - " + Metertype + " click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: " + payref + " Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
-                MailjetResponse response = await client.PostAsync(request);
-
+                return RedirectToAction("Login", "Authentication");
             }
-            DataSet ds = new DataSet();
-            OleDbDataAdapter oda = new OleDbDataAdapter(Query, Econ);
-            Econ.Close();
-            oda.Fill(ds);
-            DataTable dt = ds.Tables[0];
-            SqlBulkCopy objbulk = new SqlBulkCopy(con);
-            objbulk.DestinationTableName = "Payment";
-            objbulk.ColumnMappings.Add("DateShared", "DateShared");
-            objbulk.ColumnMappings.Add("Batch", "Batch");
-            objbulk.ColumnMappings.Add("MAP", "MAP");
-            objbulk.ColumnMappings.Add("ACNo", "Acno");
-            objbulk.ColumnMappings.Add("ARN", "ARN");
-            objbulk.ColumnMappings.Add("CustomerName", "Customer");
-            objbulk.ColumnMappings.Add("Email", "Email");
-            objbulk.ColumnMappings.Add("Tel", "Tel");
-            objbulk.ColumnMappings.Add("MeterStatus", "Meterstatus");
-            objbulk.ColumnMappings.Add("MainStatus", "Mainstatus");
-            objbulk.ColumnMappings.Add("InstallationStatusMAP", "InstallationStatus");
-            objbulk.ColumnMappings.Add("InstallationStatusNMMP", "InstallationStatusNMMP");
-            objbulk.ColumnMappings.Add("SurveyRemark", "SurveyRemark");
-            objbulk.ColumnMappings.Add("MAPMeterType", "MAPMeterType");
-            objbulk.ColumnMappings.Add("MAPSurveyRemark", "MAPSurveyRemark");
-            objbulk.ColumnMappings.Add("MeterType", "MeterType");
-            objbulk.ColumnMappings.Add("payref", "payref");
-            objbulk.ColumnMappings.Add("newnum", "newnum");
-            objbulk.ColumnMappings.Add("currentStatus", "currentStatus");
-            objbulk.ColumnMappings.Add("responseStatus", "responseStatus");
-            objbulk.ColumnMappings.Add("responseTicketId", "responseTicketId");
-            objbulk.ColumnMappings.Add("responseErrorMessage", "responseErrorMessage");
-            objbulk.ColumnMappings.Add("responseErrorCode", "responseErrorCode");
-            objbulk.ColumnMappings.Add("comment", "comment");
-            objbulk.ColumnMappings.Add("lastModifiedDateTime", "lastModifiedDateTime");
-            objbulk.ColumnMappings.Add("transactionStatus", "transactionStatus");
-            objbulk.ColumnMappings.Add("paymentTransactionReferenceId", "paymentTransactionReferenceId");
-            objbulk.ColumnMappings.Add("paymentAdviceDateTime", "paymentAdviceDateTime");
-            objbulk.ColumnMappings.Add("BU", "BU");
-            objbulk.ColumnMappings.Add("UT", "UT");
-            objbulk.ColumnMappings.Add("CISAddress", "CISAddress");
-            con.Open();
-            objbulk.WriteToServer(dt);
-            con.Close();
+            try
+            {
+                System.Threading.Thread.Sleep(5000);
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                string filepath = "/excelfolder/" + filename;
+                file.SaveAs(Path.Combine(Server.MapPath("/excelfolder/"), filename));
+                string fullpath = Server.MapPath("/excelfolder/") + filename;
+                ExcelConn(fullpath);
+
+                string Acno = "";
+                string CustomerName = "";
+                string Email = "";
+                string Tel = +234 + "";
+                string payref = "";
+                string MAPMeterType = "";
+                string Metertype = "";
+                string Query = string.Format("Select * from [{0}]", "Sheet1$");
+                OleDbCommand Ecom = new OleDbCommand(Query, Econ);
+                Econ.Open();
+                OleDbDataReader dr = Ecom.ExecuteReader();
+                while (dr.Read())
+                {
+                    Acno = dr[3].ToString();
+                    CustomerName = dr[5].ToString();
+                    Email = dr[6].ToString();
+                    Tel = dr[7].ToString();
+                    payref = dr[16].ToString();
+                    MAPMeterType = dr[13].ToString();
+
+                    if (MAPMeterType == "1phase")
+                    {
+                        Metertype = "1 Phase";
+                    }
+                    else if (MAPMeterType == "3phase")
+                    {
+                        Metertype = "3 Phase";
+                    }
+
+                    RestClient restClient = new RestClient("https://api.ng.termii.com/api/sms/otp/send");
+
+                    //Creating Json object
+                    JObject objectBody = new JObject();
+                    objectBody.Add("api_key", "TLEshtuwI3Ie4OEwEC2znYMgZ67bFcV3Nhqpx54QzfjZw2NLExjbRnqBuDMvmn");
+                    objectBody.Add("message_type", "NUMERIC");
+                    objectBody.Add("to", Tel);
+                    objectBody.Add("from", "Mojec");
+                    objectBody.Add("channel", "generic");
+                    objectBody.Add("pin_attempts", 10);
+                    objectBody.Add("pin_time_to_live", 5);
+                    objectBody.Add("pin_length", 6);
+                    objectBody.Add("pin_placeholder", "< 1234 >");
+                    objectBody.Add("message_text", " Dear Sir / Ma, Your meter application on CIS account " + Acno + " is approved.Survey Result - " + Metertype + " click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: " + payref + " Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
+                    objectBody.Add("pin_type", "NUMERIC");
+                    RestRequest restRequest = new RestRequest(Method.POST);
+
+                    restRequest.AddHeader("Content-Type", "application/json");
+                    restRequest.AddParameter("application/json", objectBody, ParameterType.RequestBody);
+                    IRestResponse restResponse = restClient.Execute(restRequest);
+                    string responsemessage = restResponse.Content;
+                    MailjetClient client = new MailjetClient("a2aecb3da444f627a5472c374b33cd84", "137c68f561d36cd5e9eb2295260ba108");
+                    MailjetRequest request = new MailjetRequest
+                    {
+                        Resource = Send.Resource,
+                    }
+                    .Property(Send.FromEmail, "map@mojec.com")
+                    .Property(Send.FromName, "Mojec Map")
+                    .Property(Send.To, Email)
+                    .Property(Send.Subject, "Ikeja Map")
+                    .Property(Send.TextPart, "Dear Sir / Ma,Your meter application on CIS account " + Acno + " is approved.Survey Result - " + Metertype + " click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: " + payref + " Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
+                    MailjetResponse response = await client.PostAsync(request);
+
+                }
+                DataSet ds = new DataSet();
+                OleDbDataAdapter oda = new OleDbDataAdapter(Query, Econ);
+                Econ.Close();
+                oda.Fill(ds);
+                DataTable dt = ds.Tables[0];
+                SqlBulkCopy objbulk = new SqlBulkCopy(con);
+                objbulk.DestinationTableName = "Payment";
+                objbulk.ColumnMappings.Add("DateShared", "DateShared");
+                objbulk.ColumnMappings.Add("Batch", "Batch");
+                objbulk.ColumnMappings.Add("MAP", "MAP");
+                objbulk.ColumnMappings.Add("ACNo", "Acno");
+                objbulk.ColumnMappings.Add("ARN", "ARN");
+                objbulk.ColumnMappings.Add("CustomerName", "Customer");
+                objbulk.ColumnMappings.Add("Email", "Email");
+                objbulk.ColumnMappings.Add("Tel", "Tel");
+                objbulk.ColumnMappings.Add("MeterStatus", "Meterstatus");
+                objbulk.ColumnMappings.Add("MainStatus", "Mainstatus");
+                objbulk.ColumnMappings.Add("InstallationStatusMAP", "InstallationStatus");
+                objbulk.ColumnMappings.Add("InstallationStatusNMMP", "InstallationStatusNMMP");
+                objbulk.ColumnMappings.Add("SurveyRemark", "SurveyRemark");
+                objbulk.ColumnMappings.Add("MAPMeterType", "MAPMeterType");
+                objbulk.ColumnMappings.Add("MAPSurveyRemark", "MAPSurveyRemark");
+                objbulk.ColumnMappings.Add("MeterType", "MeterType");
+                objbulk.ColumnMappings.Add("payref", "payref");
+                objbulk.ColumnMappings.Add("newnum", "newnum");
+                objbulk.ColumnMappings.Add("currentStatus", "currentStatus");
+                objbulk.ColumnMappings.Add("responseStatus", "responseStatus");
+                objbulk.ColumnMappings.Add("responseTicketId", "responseTicketId");
+                objbulk.ColumnMappings.Add("responseErrorMessage", "responseErrorMessage");
+                objbulk.ColumnMappings.Add("responseErrorCode", "responseErrorCode");
+                objbulk.ColumnMappings.Add("comment", "comment");
+                objbulk.ColumnMappings.Add("lastModifiedDateTime", "lastModifiedDateTime");
+                objbulk.ColumnMappings.Add("transactionStatus", "transactionStatus");
+                objbulk.ColumnMappings.Add("paymentTransactionReferenceId", "paymentTransactionReferenceId");
+                objbulk.ColumnMappings.Add("paymentAdviceDateTime", "paymentAdviceDateTime");
+                objbulk.ColumnMappings.Add("BU", "BU");
+                objbulk.ColumnMappings.Add("UT", "UT");
+                objbulk.ColumnMappings.Add("CISAddress", "CISAddress");
+                con.Open();
+                objbulk.WriteToServer(dt);
+                con.Close();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "Upload Failed";
+            }
+
             return View();
+           
         }
 
         public ActionResult CreateUsers()
         {
+            string Username = (string)Session["Username"];
+
+            if (string.IsNullOrEmpty(Convert.ToString(Session["Username"])))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
             return View();
         }
 
