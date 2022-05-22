@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "CreateUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+            <div class="page-wrapper mdc-toolbar-fixed-adjust">
+                <main class="content-wrapper">
+                    <form action="CreateUsers" method="post">
+                        <div class="mdc-layout-grid">
+                            <div class="mdc-layout-grid__inner">
+                                <div class="mdc-layout-grid__cell--span-12">
+                                    <div class="mdc-card">
+                                        <h6 class="card-title">Create User</h6>
+                                        <div class="template-demo">
+                                            <div class="mdc-layout-grid__inner">
+                                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                                                    <div class="mdc-text-field">
+                                                        <input class="mdc-text-field__input" id="text-field-hero-input" name="Fullname">
+                                                        <div class="mdc-line-ripple"></div>
+                                                        <label for="text-field-hero-input" class="mdc-floating-label">Fullname</label>
+                                                    </div>
+                                                </div>
+                                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                                        <input class="mdc-text-field__input" id="text-field-hero-input" name="Username">
+                                                        <div class="mdc-notched-outline">
+                                                            <div class="mdc-notched-outline__leading"></div>
+                                                            <div class="mdc-notched-outline__notch">
+                                                                <label for="text-field-hero-input" class="mdc-floating-label">Username</label>
+                                                            </div>
+                                                            <div class="mdc-notched-outline__trailing"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                                                    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
+
+                                                        <input type="password" class="mdc-text-field__input" id="text-field-hero-input" name="Password">
+                                                        <div class="mdc-notched-outline">
+                                                            <div class="mdc-notched-outline__leading"></div>
+                                                            <div class="mdc-notched-outline__notch">
+                                                                <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+                                                            </div>
+                                                            <div class="mdc-notched-outline__trailing"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                                                    <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
+                                                        <i class="material-icons mdc-text-field__icon">visibility</i>
+                                                        <input type="password" class="mdc-text-field__input" id="text-field-hero-input" name="Confirmpassword">
+                                                        <div class="mdc-notched-outline">
+                                                            <div class="mdc-notched-outline__leading"></div>
+                                                            <div class="mdc-notched-outline__notch">
+                                                                <label for="text-field-hero-input" class="mdc-floating-label">Confirm Password</label>
+                                                            </div>
+                                                            <div class="mdc-notched-outline__trailing"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <button type="submit" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
+                                                        Create
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    
+                </main>
+                <!-- partial:../../partials/_footer.html -->
+             
+                <!-- partial -->
+            </div>
+       

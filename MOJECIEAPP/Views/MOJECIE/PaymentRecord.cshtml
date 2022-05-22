@@ -1,36 +1,183 @@
-﻿
+﻿@model IEnumerable<MOJECIEAPP.Models.PaymentRecords>
 @{
     ViewBag.Title = "PaymentRecord";
 }
 
 
-<div class="page-wrapper mdc-toolbar-fixed-adjust">
-    <main class="content-wrapper">
-        <div class="mdc-layout-grid">
-            <div class="mdc-layout-grid__inner">
-                <div class="mdc-layout-grid__cell--span-12">
-                    <div class="mdc-card">
-                        <h6 class="card-title">Upload Paymnet File</h6>
-                        <div class="template-demo">
-                            <div class="mdc-layout-grid__inner">
-                                <form class="form">
-                                    <br />
-                                    <div class="file-upload-wrapper" data-text="Select your file!">
-                                        <input name="file-upload-field" type="file" class="file-upload-field" value="">
-                                    </div>
-                                    <br />
-                                    <div>
-                                        <button type="submit" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
-                                            Upload
-                                        </button>
-                                    </div>
-                                </form>
+<div class="col-lg-12">
+    <style>
+        .pagination {
+            display: inline-block;
+        }
+
+            .pagination a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
+
+                .pagination a.active {
+                    background-color: #4CAF50;
+                    color: mediumpurple;
+                }
+
+                .pagination a:hover:not(.active) {
+                    background-color: #ddd;
+                }
+    </style>
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                    <h6 class="card-title card-padding pb-0">Payment Records</h6>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6 pl-4">
+                            <div class="form-group">
+                                <a href="@Url.Action("UploadPayment", "MOJECIE")" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
+                                    <i class="fas fa-plus-square"></i>
+                                    <span>
+                                        <strong>Upload Payment</strong>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                     </div>
+                    @using (Html.BeginForm("PaymentRecord", "MOJECIE", FormMethod.Post))
+                    {
+                        <div class="template-demo">
+                            <div class="mdc-layout-grid__inner pl-4">
+                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop">
+                                    <div class="mdc-text-field">
+                                        <input class="mdc-text-field__input" name="Data" id="text-field-hero-input">
+                                        <div class="mdc-line-ripple"></div>
+                                        <label for="text-field-hero-input" class="mdc-floating-label">Search</label>
+                                    </div>
+                                </div>
+                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <button type="submit" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
+                                            <i class="fas fa-search"></i>
+                                            <span>
+                                                <strong>Query Table</strong>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-4-desktop">
+                                    <div class="mdc-text-field mdc-text-field--outlined">
+                                        <a href="@Url.Action("PaymentRecord", "MOJECIE")" class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;">
+                                            <i class="fas fa-sync"></i>
+                                            <span>
+                                                <strong> Refresh Table</strong>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    }
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        @Html.DisplayNameFor(model => model.DateShared)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ARN)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Acno)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Customer)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.payref)
+                                    </th>
+                                   
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-left">
+                                        @Html.DisplayFor(modelItem => item.DateShared)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ARN)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Acno)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Customer)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.payref)
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                        <center>
+                            @{
+                                double totalPages = ViewBag.TotalPages;
+
+                                <ul class="pagination">
+                                    @if (ViewBag.PageNumber == 1)
+                                    {
+                                        <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                            @Html.ActionLink("Previous", "PaymentRecord", new { PageNumber = ViewBag.PageNumber })
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                            @Html.ActionLink("Previous", "PaymentRecord", new { PageNumber = ViewBag.PageNumber - 1 })
+                                        </li>
+                                    }
+                                    @*@for (int i = 1; i <= totalPages; i++)
+                                        {
+                                            if (i == ViewBag.PageNumber)
+                                            {
+                                                <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                                    @Html.ActionLink(i.ToString(), "KYCRecords", new { PageNumber = i })
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                                    @Html.ActionLink(i.ToString(), "KYCRecords", new { PageNumber = i })
+                                                </li>
+                                            }
+                                        }*@
+                                    @if (ViewBag.PageNumber == totalPages)
+                                    {
+                                        <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                            @Html.ActionLink("Next", "PaymentRecord", new { PageNumber = ViewBag.PageNumber })
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="mdc-button mdc-button--outlined mdc-ripple-upgraded" style="--mdc-ripple-fg-size:57px; --mdc-ripple-fg-scale:1.96763; --mdc-ripple-fg-translate-start:39.5px, 0.5px; --mdc-ripple-fg-translate-end:19.3008px, -10.5px;float:left">
+                                            @Html.ActionLink("Next", "PaymentRecord", new { PageNumber = ViewBag.PageNumber + 1 })
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </center>
+
+                    </div>
                 </div>
             </div>
+
         </div>
-    </main>
+
+    </div>
 </div>
 

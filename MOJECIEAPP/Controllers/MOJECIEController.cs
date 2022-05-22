@@ -25,8 +25,14 @@ namespace MOJECIEAPP.Controllers
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         OleDbConnection Econ;
         List<KYCRecords> _kycs = new List<KYCRecords>();
+        List<PaymentRecords> _paymentRecords = new List<PaymentRecords>();
         private readonly KYCExportServices kyc = new KYCExportServices();
         // GET: MOJECIE
+
+        public ActionResult Dashboard()
+        {
+
+        }
         public ActionResult Upload()
         {
             return View();
@@ -45,13 +51,11 @@ namespace MOJECIEAPP.Controllers
         {
             string constr = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=""Excel 12.0 Xml;HDR=YES;""", FilePath);
             Econ = new OleDbConnection(constr);
-        }
+        }   
         private void InsertExceldate(string fileepath, string filename)
         {
-
             string fullpath = Server.MapPath("/excelfolder/") + filename;
             ExcelConn(fullpath);
-
             string SN = "";
             string Dateshared = "";
             string Batch = "";
@@ -92,17 +96,10 @@ namespace MOJECIEAPP.Controllers
             string MAP = "";
             string SurveyreportinDate = "";
             string AdditionalComment = "";
-
-
-
-
-
             string Query = string.Format("Select * from [{0}]", "Sheet1$");
             OleDbCommand Ecom = new OleDbCommand(Query, Econ);
             Econ.Open();
-
             OleDbDataReader dr = Ecom.ExecuteReader();
-
             while (dr.Read())
             {
                 SN = dr[0].ToString();
@@ -121,8 +118,7 @@ namespace MOJECIEAPP.Controllers
                 Landmark = dr[13].ToString();
                 BU = dr[14].ToString();
                 UT = dr[15].ToString();
-                Landmark = dr[16].ToString();
-      
+                Landmark = dr[16].ToString(); 
                 Feeder = dr[17].ToString();
                 DT = dr[18].ToString();
                 Tariff = dr[19].ToString();
@@ -147,13 +143,10 @@ namespace MOJECIEAPP.Controllers
                 MAP = dr[37].ToString();
                 SurveyreportinDate = dr[38].ToString();
                 AdditionalComment = dr[39].ToString();
-
                 SqlConnection con = new SqlConnection("Data Source=mojecserver.database.windows.net;Initial Catalog=MOJECIE;User ID=mojec;Password=Admin123;");
                 con.Open();
-
                 //MySqlCommand cmddelete = new MySqlCommand("truncate table duplicate",con);
                 //cmddelete.ExecuteNonQuery();
-
                 SqlCommand cmd = new SqlCommand("Select * from KYCEXCEL where ARN = @arn", con);
                 cmd.Parameters.AddWithValue("@arn", ARN);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -210,69 +203,13 @@ namespace MOJECIEAPP.Controllers
                     icmmd.Parameters.AddWithValue("@RemarkMeterReadyNotMeterReady", RemarkMeterReadyNotMeterReady);
                     icmmd.Parameters.AddWithValue("@MAP", MAP);
                     icmmd.Parameters.AddWithValue("@AdditionalComment", AdditionalComment);
-                    icmmd.ExecuteNonQuery();
-                    
-
+                    icmmd.ExecuteNonQuery();                  
                     ViewBag.Result = "Data Imported Successfully";
                 }
                 con.Close();
 
             }
-
-
-
-            //DataSet ds = new DataSet();
-            //OleDbDataAdapter oda = new OleDbDataAdapter(Query, Econ);
-            //Econ.Close();
-            //oda.Fill(ds);
-            //DataTable dt = ds.Tables[0];
-            //SqlBulkCopy objbulk = new SqlBulkCopy(con);
-            //objbulk.DestinationTableName = "KYCEXCEL";
-            //objbulk.ColumnMappings.Add("S/N", "SN");
-            ////objbulk.ColumnMappings.Add("Date Shared", "DateShared");
-            //objbulk.ColumnMappings.Add("Batch", "Batch");
-            //objbulk.ColumnMappings.Add("A/C No", "ACNo1");
-            //objbulk.ColumnMappings.Add("A/C No", "ACNo2");
-            //objbulk.ColumnMappings.Add("SBCs MAIN", "SBCsMAIN");
-            ////objbulk.ColumnMappings.Add("SBCs", "SBCs");
-            ////objbulk.ColumnMappings.Add("OPERATOR", "OPERATOR");
-            //objbulk.ColumnMappings.Add("ARN", "ARN");
-            //objbulk.ColumnMappings.Add("Customer Name", "Customer");
-            //objbulk.ColumnMappings.Add("CIS Name", "CIS");
-            //objbulk.ColumnMappings.Add("Email", "Email");
-            //objbulk.ColumnMappings.Add("Phone Number", "PhoneNumber");
-            //objbulk.ColumnMappings.Add("Address", "Address");
-            //objbulk.ColumnMappings.Add("CIS Address", "CISAddress");
-            //objbulk.ColumnMappings.Add("Landmark", "Landmark");
-            //objbulk.ColumnMappings.Add("BU", "BU");
-            //objbulk.ColumnMappings.Add("UT", "UT");
-            //objbulk.ColumnMappings.Add("Feeder", "Feeder");
-            //objbulk.ColumnMappings.Add("DT", "DT");
-            //objbulk.ColumnMappings.Add("Tariff", "Tariff");
-            //objbulk.ColumnMappings.Add("Metered Status", "MeteredStatus");
-            //objbulk.ColumnMappings.Add("Ready To Pay (Yes/No)", "ReadyToPay");
-            ////objbulk.ColumnMappings.Add("Occupier Phone No", "OccupierPhone");
-            //objbulk.ColumnMappings.Add("Type of Apartment", "TypeofApartment");
-            //objbulk.ColumnMappings.Add("Existing Meter Type (1phase/3phase/NA)", "ExistingMeterType");
-            //objbulk.ColumnMappings.Add("Existing Meter No", "ExistingMeterNo");
-            //objbulk.ColumnMappings.Add("Does Customer bill match data in column 3-10 (Yes/No/NA)", "Customerbillmatchdataincolumn310");
-            ////objbulk.ColumnMappings.Add("Est Customer Total Load (Amps)", "EstCustomerTotalLoadAmps");
-            //objbulk.ColumnMappings.Add("Recommended Meter Type (1phase/3phase/Nil)", "RecommendedMeterType");
-            //objbulk.ColumnMappings.Add("Installation Mode (High wall/ Pole mounted)", "InstallationModePolemounted");
-            //objbulk.ColumnMappings.Add("LOAD wire separation required? (Yes/No)", "LOADwireseparation");
-            //objbulk.ColumnMappings.Add("Account Separation Required? (Yes/No)", "AccountSeparation");
-            //objbulk.ColumnMappings.Add("If Yes, number of 1Q required for Account Separation", "numberof1QrequiredforAccountSeparation");
-            //objbulk.ColumnMappings.Add("If Yes, number of 3Q required for Account Separation", "numberof3QrequiredforAccountSeparation");
-            //objbulk.ColumnMappings.Add("Installation/ Survey Company", "InstallationSurveyCompany");
-            //objbulk.ColumnMappings.Add("Installer/ Survey staff", "InstallerSurveystaff");
-            //objbulk.ColumnMappings.Add("Survey Date", "SurveyDate");
-            //objbulk.ColumnMappings.Add("Remark (Meter Ready/ Not Meter Ready)", "RemarkMeterReadyNotMeterReady");
-            //objbulk.ColumnMappings.Add("MAP", "MAP");
-            //objbulk.ColumnMappings.Add("Additional Comment", "AdditionalComment");
-            //ViewBag.Result = "Data Imported Successfully";
-            //con.Open();
-            //objbulk.WriteToServer(dt);
-            //con.Close();
+           
         }
         public ActionResult KYCRecords(int PageNumber = 1)
         {
@@ -338,9 +275,33 @@ namespace MOJECIEAPP.Controllers
             ViewBag.TotalPages = Math.Ceiling(_kycs.Count() / 10.0);
             return View(_kycs);
         }
-        public ActionResult PaymentRecord()
+        public ActionResult PaymentRecord(int PageNumber = 1)
         {
-            return View();
+            _paymentRecords = new List<PaymentRecords>();
+            using (SqlConnection con = new SqlConnection(StoreConnection.GetConnection()))
+            {
+                SqlCommand cmd = new SqlCommand("GetPaymentsReport", con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    PaymentRecords payment = new PaymentRecords();
+                    payment.Acno = rdr["Acno"].ToString();
+                    payment.DateShared = rdr["DateShared"].ToString();
+                    payment.ARN = rdr["ARN"].ToString();
+                    payment.payref = rdr["payref"].ToString();
+                    payment.Customer = rdr["Customer"].ToString();
+                    payment.Tel = rdr["Tel"].ToString();
+                    _paymentRecords.Add(payment);
+                }
+                rdr.Close();
+            }
+            ViewBag.TotalPages = Math.Ceiling(_paymentRecords.Count() / 10.0);
+            ViewBag.PageNumber = PageNumber;
+            _paymentRecords = _paymentRecords.Skip((PageNumber - 1) * 10).Take(10).ToList();
+
+            return View(_paymentRecords);
         }
         public ActionResult DownloadReport(string start ,string end)
         {
@@ -408,55 +369,39 @@ namespace MOJECIEAPP.Controllers
             
             return View(kyc);
         }
-
         public ActionResult UploadPayment()
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult UploadPayment(HttpPostedFileBase file)
+        public async Task<ActionResult> UploadPayment(HttpPostedFileBase file)
         {
             System.Threading.Thread.Sleep(5000);
             string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
             string filepath = "/excelfolder/" + filename;
             file.SaveAs(Path.Combine(Server.MapPath("/excelfolder/"), filename));
-            InsertPaymentdata(filepath, filename);
-            return View();
-        }
-
-        private async Task InsertPaymentdata(string fileepath, string filename)
-        {          
-
             string fullpath = Server.MapPath("/excelfolder/") + filename;
             ExcelConn(fullpath);
 
-            string Acno = "8934034994343";
-            string CustomerName = "Samson Ajayi";
-            string Email = "samson@mojec.com";
-            string Tel = +234+"7069002243";
-            string payref = "43898438304343";
-            string MAPMeterType = "1phase";
-
+            string Acno = "";
+            string CustomerName = "";
+            string Email = "";
+            string Tel = +234 + "";
+            string payref = "";
+            string MAPMeterType = "";
             string Metertype = "";
-
-            
-
-
             string Query = string.Format("Select * from [{0}]", "Sheet1$");
             OleDbCommand Ecom = new OleDbCommand(Query, Econ);
             Econ.Open();
-
             OleDbDataReader dr = Ecom.ExecuteReader();
-
             while (dr.Read())
             {
-                //Acno = dr[3].ToString();
-                //CustomerName = dr[5].ToString();
-                //Email = dr[6].ToString();
-                //Tel = dr[7].ToString();
-                //payref = dr[16].ToString();
-                //MAPMeterType = dr[13].ToString();
+                Acno = dr[3].ToString();
+                CustomerName = dr[5].ToString();
+                Email = dr[6].ToString();
+                Tel = dr[7].ToString();
+                payref = dr[16].ToString();
+                MAPMeterType = dr[13].ToString();
 
                 if (MAPMeterType == "1phase")
                 {
@@ -488,10 +433,6 @@ namespace MOJECIEAPP.Controllers
                 restRequest.AddParameter("application/json", objectBody, ParameterType.RequestBody);
                 IRestResponse restResponse = restClient.Execute(restRequest);
                 string responsemessage = restResponse.Content;
-
-
-
-
                 MailjetClient client = new MailjetClient("a2aecb3da444f627a5472c374b33cd84", "137c68f561d36cd5e9eb2295260ba108");
                 MailjetRequest request = new MailjetRequest
                 {
@@ -501,17 +442,10 @@ namespace MOJECIEAPP.Controllers
                 .Property(Send.FromName, "Mojec Map")
                 .Property(Send.To, Email)
                 .Property(Send.Subject, "Ikeja Map")
-                .Property(Send.TextPart, "Dear Sir / Ma,Your meter application on CIS account "+Acno+" is approved.Survey Result - "+Metertype+" click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: "+payref+" Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
+                .Property(Send.TextPart, "Dear Sir / Ma,Your meter application on CIS account " + Acno + " is approved.Survey Result - " + Metertype + " click to pay https://www.ikejaelectric.com/meterfee Ensure you use the  reference code below:Ref Code: " + payref + " Meter prices Single phase N63, 061.32 Three phase N117, 910.69");
                 MailjetResponse response = await client.PostAsync(request);
-                
-
-               
-
 
             }
-
-
-
             DataSet ds = new DataSet();
             OleDbDataAdapter oda = new OleDbDataAdapter(Query, Econ);
             Econ.Close();
@@ -553,18 +487,43 @@ namespace MOJECIEAPP.Controllers
             con.Open();
             objbulk.WriteToServer(dt);
             con.Close();
-
-
-
+            return View();
         }
 
+        public ActionResult CreateUsers()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult CreateUsers(Users user)
+        {
+            if(user.Password != user.Confirmpassword)
+            {
+                ViewBag.Password = "Password do not match";
+            }
+            else
+            {
+                using (SqlConnection con = new SqlConnection(StoreConnection.GetConnection()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("CreateUser", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Fullname", user.Fullname);
+                        cmd.Parameters.AddWithValue("@Username", user.UserName);
+                        cmd.Parameters.AddWithValue("@Password", user.Password);
+                        if (con.State != System.Data.ConnectionState.Open)
 
+                            con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
 
-
-
-
-
+                    con.Close();
+                }
+            }
+           
+            return RedirectToAction ("CreatUsers");
+        }
 
         }
     }
