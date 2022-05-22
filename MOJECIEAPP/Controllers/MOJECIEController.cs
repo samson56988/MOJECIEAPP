@@ -31,7 +31,19 @@ namespace MOJECIEAPP.Controllers
 
         public ActionResult Dashboard()
         {
+            con.Open();
+            SqlCommand cmd = new SqlCommand("select Count(*) from KYCEXCEL WHERE BU = 'SHOMOLU'", con);
+            int r = Convert.ToInt32(cmd.ExecuteScalar());
+            ViewBag.Shomolu = r;
 
+            SqlCommand cmd2 = new SqlCommand("select Count(*) from KYCEXCEL WHERE BU = 'IKEJA'", con);
+            int r2 = Convert.ToInt32(cmd2.ExecuteScalar());
+            ViewBag.Ikeja = r2;
+
+            SqlCommand cmd3 = new SqlCommand("select Count(*) from KYCEXCEL WHERE BU = 'OSHODI'", con);
+            int r3 = Convert.ToInt32(cmd3.ExecuteScalar());
+            ViewBag.Oshodi = r3;
+            return View();
         }
         public ActionResult Upload()
         {
